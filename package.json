@@ -1,0 +1,67 @@
+{
+	"name": "@zokugun/setup-repo",
+	"description": "CLI utility to quickly setup a GitHub repository",
+	"version": "0.0.0",
+	"author": {
+		"name": "Baptiste Augrain",
+		"email": "daiyam@zokugun.org"
+	},
+	"license": "MIT",
+	"homepage": "https://github.com/zokugun/setup-repo",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/zokugun/setup-repo.git"
+	},
+	"bugs": {
+		"url": "https://github.com/zokugun/setup-repo/discussions/categories/issue-triage"
+	},
+	"engines": {
+		"node": ">=18.20"
+	},
+	"type": "module",
+	"bin": {
+		"setup-repo": "bin/setup-repo"
+	},
+	"main": "index.js",
+	"scripts": {
+		"build": "npm run clean && npm run compile:src",
+		"clean": "rimraf lib",
+		"compile:src": "tsc -p src",
+		"lint": "xo",
+		"lint:fix": "xo --fix",
+		"prepack": "npm run compile:src build",
+		"prepare": "husky; fixpack || true",
+		"release": "release-it",
+		"watch:build": "tsc-watch -p src --onSuccess 'npm run build'",
+		"watch:src": "tsc-watch -p src"
+	},
+	"dependencies": {
+		"@zokugun/cli-utils": "^0.2.0",
+		"@zokugun/fs-extra-plus": "^0.3.6",
+		"@zokugun/is-it-type": "^0.7.0",
+		"@zokugun/xtry": "^0.11.1",
+		"execa": "^9.6.1"
+	},
+	"devDependencies": {
+		"@commitlint/cli": "^19.7.1",
+		"@commitlint/config-conventional": "^19.7.1",
+		"@types/node": "^20.14.8",
+		"fixpack": "^4.0.0",
+		"husky": "^9.1.7",
+		"lint-staged": "^16.1.4",
+		"release-it": "^19.2.4",
+		"tsc-watch": "^7.2.0",
+		"typescript": "^5.7.3",
+		"xo": "0.60.0"
+	},
+	"overrides": {
+		"terser-webpack-plugin": {
+			"serialize-javascript": "^7.0.3"
+		},
+		"log-update": {
+			"slice-ansi": "^7.1.2",
+			"wrap-ansi": "^9.0.2"
+		}
+	},
+	"keywords": []
+}
