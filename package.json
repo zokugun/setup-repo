@@ -22,14 +22,13 @@
 	"bin": {
 		"setup-repo": "bin/setup-repo"
 	},
-	"main": "index.js",
 	"scripts": {
 		"build": "npm run clean && npm run compile:src",
 		"clean": "rimraf lib",
 		"compile:src": "tsc -p src",
 		"lint": "xo",
 		"lint:fix": "xo --fix",
-		"prepack": "npm run compile:src build",
+		"prepack": "npm run build",
 		"prepare": "husky; fixpack || true",
 		"release": "release-it",
 		"watch:build": "tsc-watch -p src --onSuccess 'npm run build'",
@@ -53,15 +52,6 @@
 		"tsc-watch": "^7.2.0",
 		"typescript": "^5.7.3",
 		"xo": "0.60.0"
-	},
-	"overrides": {
-		"terser-webpack-plugin": {
-			"serialize-javascript": "^7.0.3"
-		},
-		"log-update": {
-			"slice-ansi": "^7.1.2",
-			"wrap-ansi": "^9.0.2"
-		}
 	},
 	"keywords": []
 }
