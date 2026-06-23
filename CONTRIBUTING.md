@@ -14,6 +14,7 @@ This document is intended for anyone considering opening an **issue**, **discuss
 
 - [Code of Conduct](#code-of-conduct)
 - [Users are not allowed to create Issues directly](#users-are-not-allowed-to-create-issues-directly)
+- [Use of AI](#use-of-ai)
 - [I have a bug! / Something isn't working](#i-have-a-bug--something-isnt-working)
 - [I have an idea for a feature](#i-have-an-idea-for-a-feature)
 - [I want to make changes](#i-want-to-make-changes)
@@ -35,10 +36,20 @@ Any Discussion which clearly identifies a problem and can be confirmed or reprod
 [Discussion]: https://github.com/zokugun/setup-repo/discussions
 [discussions]: https://github.com/zokugun/setup-repo/discussions
 
+## Use of AI
+
+We welcome use of AI tools to help draft discussions, issues, or code, but please follow these rules:
+
+- Use AI tools responsibly and disclose their use.
+- Ensure all content passes a human review for authenticity and quality.
+- Be concise. Do not write verbose discussions, issues or PR.
+
+Discussions, issues or PR that consist solely of unvetted AI outputs may be closed at the maintainer's discretion.
+
 ## I have a bug! / Something isn't working
 
 First, search the issue tracker and discussions for similar issues.<br />
-Tip: also search for [closed issues] and [closed discussions] — your issue might have already been fixed!
+Tip: also search for [closed issues] and [closed discussions]; your issue might have already been fixed!
 
 > [!NOTE]
 >
