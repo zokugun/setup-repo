@@ -47,7 +47,8 @@
 		"@zokugun/fs-extra-plus": "0.3.8",
 		"@zokugun/is-it-type": "0.7.0",
 		"@zokugun/xtry": "0.11.6",
-		"execa": "9.6.1"
+		"execa": "9.6.1",
+		"yaml": "2.9.0"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "20.5.3",

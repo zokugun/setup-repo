@@ -1,4 +1,4 @@
-export type CliOptions = {
-	branch: string;
-	package: string;
+export type ProjectConfig = {
+	file: string;
+	settings: Record<string, unknown>;
 };

@@ -2,15 +2,22 @@ import path from 'node:path';
 import process from 'node:process';
 import { enquirer, logger } from '@zokugun/cli-utils';
 import fse from '@zokugun/fs-extra-plus/async';
+import { isNonEmptyString } from '@zokugun/is-it-type';
 import { stringifyError, xtryAsync } from '@zokugun/xtry';
 import { execa } from 'execa';
-import { type CliOptions } from './types.js';
 import { getRepository } from './utils/get-repository.js';
+import { loadProject } from './utils/load-project.js';
+
+export type CliOptions = {
+	branch?: string;
+	package?: string;
+};
 
 export async function run(options: CliOptions): Promise<void> {
+	const branchOption = options.branch ?? 'master';
 	const root = process.cwd();
 
-	logger.begin();
+	logger.beginTimer();
 
 	const packageJson = await fse.readJSON(path.join(root, 'package.json'));
 	if(packageJson.fails) {
@@ -24,8 +31,29 @@ export async function run(options: CliOptions): Promise<void> {
 
 	const repository = repoResult.value;
 
+	let packageName: string;
+
+	if(isNonEmptyString<string>(options.package)) {
+		packageName = options.package;
+	}
+	else {
+		const project = await loadProject(root);
+		if(project.fails) {
+			logger.fatal(stringifyError(project.error));
+		}
+
+		if(isNonEmptyString<string>(project.value?.settings.package)) {
+			packageName = project.value.settings.package;
+		}
+		else {
+			logger.fatal('No package found in the options or in a repo-starter-kit config file');
+		}
+	}
+
 	logger.info(`cwd: ${root}`);
 	logger.info(`repository: ${repository}`);
+	logger.info(`branch: ${branchOption}`);
+	logger.info(`package: ${packageName}`);
 
 	await enquirer.prompt({
 		type: 'invisible',
@@ -45,8 +73,8 @@ export async function run(options: CliOptions): Promise<void> {
 		logger.fatal(stringifyError(branchResult.error));
 	}
 
-	if(branchResult.value.stdout !== options.branch) {
-		await execa('git', ['branch', '-M', options.branch], { cwd: root, stdio: 'pipe' });
+	if(branchResult.value.stdout !== branchOption) {
+		await execa('git', ['branch', '-M', branchOption], { cwd: root, stdio: 'pipe' });
 	}
 
 	const remoteResult = await xtryAsync(execa('git', ['remote', '--verbose'], { cwd: root, stdio: 'pipe' }));
@@ -83,7 +111,7 @@ export async function run(options: CliOptions): Promise<void> {
 
 	logger.info('Setup GitHub');
 
-	await execa('npm', ['exec', '--', 'repo-starter-kit@latest', '--repo', repository, '--create', '--package', options.package], { stdio: 'inherit' });
+	await execa('npm', ['exec', '--', 'repo-starter-kit@latest', '--repo', repository, '--create', '--package', packageName], { stdio: 'inherit' });
 
-	logger.finish();
+	logger.finishTimer();
 }
